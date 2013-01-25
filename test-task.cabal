@@ -18,6 +18,8 @@ executable test-task
   main-is:	     Main.hs
   hs-source-dirs:    src
   other-modules:     Types,
-                     Parser
+                     Parser,
+                     Deducer
   build-depends:     base ==4.5.*,
-                     parsec >= 3.1
+                     parsec >= 3.1,
+                     mtl >= 2.0
