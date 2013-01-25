@@ -1,6 +1,7 @@
-module Parser (parseString) where
+module Parser (parseString, showExpressions) where
 
 import Text.Parsec
+import Data.List (intercalate)
 
 import Types
 
@@ -53,3 +54,10 @@ rawExpr = char ';' >> (expr <|> empty)
 
 parseString :: String -> Either ParseError [Expression]
 parseString = runParser (many1 rawExpr) ()  "" . (';':)
+
+showExpr :: Maybe Expression -> String
+showExpr Nothing = "false"
+showExpr (Just (ENumber n)) = show n
+showExpr (Just (EString s)) = s
+
+showExpressions = intercalate ";" . map showExpr

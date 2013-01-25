@@ -13,8 +13,3 @@ data OpType = Plus
             | Mod
             | Div
               deriving (Show, Read, Eq)
-
-data Chunk = Chunk Expression
-           | Result Expression
-           | Corrupted
-             deriving (Show)
