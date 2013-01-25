@@ -26,17 +26,17 @@ eval m (EOp o l r) = do
   op o left right
 
 op :: OpType -> Expression -> Expression -> Maybe Expression
-op Plus  (EString l) (EString r) = Just $ EString $ l ++ r
-op Plus  (EString l) (ENumber r) = Just $ EString $ l ++ show r
-op Plus  (ENumber l) (EString r) = Just $ EString $ show l ++ r
-op Plus  (ENumber l) (ENumber r) = Just $ ENumber $ l + r
-op Minus (ENumber l) (ENumber r) = Just $ ENumber $ l - r
-op Mult  (ENumber l) (ENumber r) = Just $ ENumber $ l * r
-op Mod   (ENumber l) (ENumber 0) = Nothing
-op Mod   (ENumber l) (ENumber r) = Just $ ENumber $ l `mod` r
-op Div   (ENumber l) (ENumber 0) = Nothing
-op Div   (ENumber l) (ENumber r) = Just $ ENumber $ l `div` r
-op _     _           _           = Nothing
+op    Plus     (EString l)   (EString r) =  Just $ EString $ l ++ r
+op    Plus     (EString l)   (ENumber r) =  Just $ EString $ l ++ show r
+op    Plus     (ENumber l)   (EString r) =  Just $ EString $ show l ++ r
+op    Plus     (ENumber l)   (ENumber r) =  Just $ ENumber $ l + r
+op    Minus    (ENumber l)   (ENumber r) =  Just $ ENumber $ l - r
+op    Mult     (ENumber l)   (ENumber r) =  Just $ ENumber $ l * r
+op    Mod      (ENumber l)   (ENumber 0) =  Nothing
+op    Mod      (ENumber l)   (ENumber r) =  Just $ ENumber $ l `mod` r
+op    Div      (ENumber l)   (ENumber 0) =  Nothing
+op    Div      (ENumber l)   (ENumber r) =  Just $ ENumber $ l `div` r
+op    _        _             _           =  Nothing
 
 hasCycle :: [Expression] -> (Int, Expression) -> Bool
 hasCycle m (n,e) = hasCycle' e [n]
