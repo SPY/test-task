@@ -13,23 +13,23 @@ modp = string "mod" >> return Mod
 
 multOp = mult <|> divp <|> modp
 
-simple = try (do
+factor = try (do
   l <- prim
-  spaces
-  op <- plus <|> minus
-  spaces
-  r <- simple
-  return $ EOp op l r) <|> prim
-
-factorOp = do
-  l <- simple
   spaces
   op <- multOp
   spaces
-  r <- expr
+  r <- prim
+  return $ EOp op l r) <|> prim
+
+operation = do
+  l <- factor
+  spaces
+  op <- plus <|> minus
+  spaces
+  r <- try operation <|> factor
   return $ EOp op l r
 
-op = try factorOp <|> simple
+op = try operation <|> factor
 
 str = do
   str <- many1 $ noneOf ";+-*"
@@ -46,7 +46,7 @@ num = do
 
 empty = return EEmpty
 
-prim = try num <|> try ref <|> str
+prim = (try num) <|> (try ref) <|> str
 
 expr = try op <|> prim
 
